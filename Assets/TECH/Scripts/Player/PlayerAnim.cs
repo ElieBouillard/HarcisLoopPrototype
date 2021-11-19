@@ -14,11 +14,13 @@ public class PlayerAnim : MonoBehaviour
     private void OnEnable()
     {
         PlayerInputs.CastSpellKeyPress += TriggerCastSpell;
+        PlayerInputs.CastWallKeyRelease += TriggerCastSpell;
     }
 
     private void OnDisable()
     {
         PlayerInputs.CastSpellKeyPress -= TriggerCastSpell;
+        PlayerInputs.CastWallKeyRelease -= TriggerCastSpell;
     }
     #endregion
 

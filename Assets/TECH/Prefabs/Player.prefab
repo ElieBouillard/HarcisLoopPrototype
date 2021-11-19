@@ -254,7 +254,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1468571453765498510
 Transform:
   m_ObjectHideFlags: 0
@@ -1467,10 +1467,10 @@ NavMeshAgent:
   m_GameObject: {fileID: 5706921038898045207}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5
+  m_Radius: 0.1
   m_Speed: 4.5
   m_Acceleration: 999
-  avoidancePriority: 50
+  avoidancePriority: 25
   m_AngularSpeed: 9999
   m_StoppingDistance: 0.5
   m_AutoTraverseOffMeshLink: 1
@@ -1539,10 +1539,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _launchProjectileTransform: {fileID: 6553400374782244818}
+  _wallPreviewParent: {fileID: 1338664187172148863}
   _floorMask:
     serializedVersion: 2
     m_Bits: 8
-  _projectile: {fileID: 3211617079162068245, guid: bcadfa88f2e7c0141a346b5b91f7cbc5, type: 3}
+  _projectilePrefab: {fileID: 3211617079162068245, guid: bcadfa88f2e7c0141a346b5b91f7cbc5, type: 3}
+  _wallPrefab: {fileID: 6667537904724880107, guid: 789dece957e2e304fa0fc20374c192c8, type: 3}
   _playerUIOnFloor: {fileID: 8975971490988547645}
 --- !u!1 &5773746857457161161
 GameObject:
@@ -2022,7 +2024,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5861829549580949339
 Transform:
   m_ObjectHideFlags: 0

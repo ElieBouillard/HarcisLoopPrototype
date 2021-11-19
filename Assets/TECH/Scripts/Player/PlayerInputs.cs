@@ -11,8 +11,9 @@ public class PlayerInputs : MonoBehaviour
     public static event Action<Vector3> MovementClickPress;
     public static event Action<bool> RecenterCameraKeyPress;
     public static event Action LockCameraKeyPress;
-
     public static event Action CastSpellKeyPress;
+    public static event Action CastWallKeyPress;
+    public static event Action CastWallKeyRelease;
     public static event Action StopPlayerMovementKeyPress;
 
     private void Update()
@@ -47,6 +48,16 @@ public class PlayerInputs : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Y))
         {
             LockCameraKeyPress?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            CastWallKeyPress?.Invoke();
+        }
+
+        if (Input.GetKeyUp(KeyCode.E))
+        {
+            CastWallKeyRelease?.Invoke();
         }
     }
 }

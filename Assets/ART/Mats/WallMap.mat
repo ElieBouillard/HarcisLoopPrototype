@@ -9,7 +9,8 @@ Material:
   m_PrefabAsset: {fileID: 0}
   m_Name: WallMap
   m_Shader: {fileID: 4800000, guid: 74814cb4b79e6a045b11d51772c4b3ea, type: 3}
-  m_ShaderKeywords: _AD_CUTOUT_STANDARD_SOURCE_TWO_CUSTOM_MAPS _AD_STATE_ENABLED
+  m_ShaderKeywords: _AD_CUTOUT_STANDARD_SOURCE_TWO_CUSTOM_MAPS _AD_EDGE_BASE_SOURCE_CUTOUT_STANDARD
+    _AD_STATE_ENABLED
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
@@ -20,11 +21,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _AdvancedDissolveCutoutStandardMap1:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 81810837cfbbde0488134e76f55f5cff, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AdvancedDissolveCutoutStandardMap2:
-        m_Texture: {fileID: 0}
+        m_Texture: {fileID: 2800000, guid: 8eb47cf8ada33664bac49692c5e404b0, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _AdvancedDissolveCutoutStandardMap3:
@@ -95,7 +96,7 @@ Material:
     - _AdvancedDissolveCutoutGeometricXYZSpace: 0
     - _AdvancedDissolveCutoutGeometricXYZStyle: 0
     - _AdvancedDissolveCutoutStandardBaseInvert: 0
-    - _AdvancedDissolveCutoutStandardClip: 0.5
+    - _AdvancedDissolveCutoutStandardClip: 1
     - _AdvancedDissolveCutoutStandardMap1Channel: 3
     - _AdvancedDissolveCutoutStandardMap1Intensity: 1
     - _AdvancedDissolveCutoutStandardMap1Invert: 0
@@ -105,7 +106,7 @@ Material:
     - _AdvancedDissolveCutoutStandardMap3Channel: 3
     - _AdvancedDissolveCutoutStandardMap3Intensity: 1
     - _AdvancedDissolveCutoutStandardMap3Invert: 0
-    - _AdvancedDissolveCutoutStandardMapsBlendType: 0
+    - _AdvancedDissolveCutoutStandardMapsBlendType: 1
     - _AdvancedDissolveCutoutStandardMapsScreenSpaceUVScale: 0
     - _AdvancedDissolveCutoutStandardMapsTriplanarMappingSpace: 0
     - _AdvancedDissolveEdgeAdditionalColorAlphaOffset: 0
@@ -125,7 +126,7 @@ Material:
     - _AdvancedDissolveKeywordCutoutStandardSource: 3
     - _AdvancedDissolveKeywordCutoutStandardSourceMapsMappingType: 0
     - _AdvancedDissolveKeywordEdgeAdditionalColorSource: 0
-    - _AdvancedDissolveKeywordEdgeBaseSource: 0
+    - _AdvancedDissolveKeywordEdgeBaseSource: 1
     - _AdvancedDissolveKeywordEdgeUVDistortionSource: 0
     - _AdvancedDissolveKeywordGlobalControlID: 0
     - _AdvancedDissolveKeywordState: 1
@@ -170,7 +171,7 @@ Material:
     - _AdvancedDissolveEdgeAdditionalColorMapOffset: {r: 0, g: 0, b: 0, a: 0}
     - _AdvancedDissolveEdgeAdditionalColorMapScroll: {r: 0, g: 0, b: 0, a: 0}
     - _AdvancedDissolveEdgeAdditionalColorMapTiling: {r: 1, g: 1, b: 1, a: 0}
-    - _AdvancedDissolveEdgeBaseColor: {r: 0, g: 1, b: 0, a: 1}
+    - _AdvancedDissolveEdgeBaseColor: {r: 0.3443396, g: 0.93306404, b: 1, a: 1}
     - _AdvancedDissolveEdgeBaseColorIntensity: {r: 0, g: 0, b: 0, a: 0}
     - _AdvancedDissolveEdgeUVDistortionMapOffset: {r: 0, g: 0, b: 0, a: 0}
     - _AdvancedDissolveEdgeUVDistortionMapScroll: {r: 0, g: 0, b: 0, a: 0}
