@@ -8,8 +8,12 @@ public class PlayerInputs : MonoBehaviour
     [SerializeField] private Camera _mainCamera = null;
     [SerializeField] private LayerMask _floorMask = new LayerMask();
 
-    public static event Action<Vector3> MouseClick0;
-    public static event Action<bool> SpacePress;
+    public static event Action<Vector3> MovementClickPress;
+    public static event Action<bool> RecenterCameraKeyPress;
+    public static event Action LockCameraKeyPress;
+
+    public static event Action CastSpellKeyPress;
+    public static event Action StopPlayerMovementKeyPress;
 
     private void Update()
     {
@@ -18,16 +22,31 @@ public class PlayerInputs : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
             RaycastHit hit = new RaycastHit();
             if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _floorMask)) { return; }
-            MouseClick0?.Invoke(hit.point);
+            MovementClickPress?.Invoke(hit.point);
         }
 
-        if (Input.GetButtonDown("Jump"))
+        if (Input.GetKeyDown(KeyCode.Space))
         {
-            SpacePress?.Invoke(true);
+            RecenterCameraKeyPress?.Invoke(true);
         }
-        if (Input.GetButtonUp("Jump"))
+        if (Input.GetKeyUp(KeyCode.Space))
         {
-            SpacePress?.Invoke(false);
+            RecenterCameraKeyPress?.Invoke(false);
+        }
+
+        if (Input.GetKeyDown(KeyCode.A))
+        {
+            CastSpellKeyPress?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.S))
+        {
+            StopPlayerMovementKeyPress?.Invoke();
+        }
+
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            LockCameraKeyPress?.Invoke();
         }
     }
 }

@@ -18,12 +18,14 @@ public class CameraController : MonoBehaviour
 #region OnEnable/OnDisable
     private void OnEnable()
     {
-        PlayerInputs.SpacePress += CameraOnPlayerPos;
+        PlayerInputs.RecenterCameraKeyPress += CameraOnPlayerPos;
+        PlayerInputs.LockCameraKeyPress += CameraLock;
     }
 
     private void OnDisable()
     {
-        PlayerInputs.SpacePress -= CameraOnPlayerPos;
+        PlayerInputs.RecenterCameraKeyPress -= CameraOnPlayerPos;
+        PlayerInputs.LockCameraKeyPress -= CameraLock;
     }
 #endregion
 
@@ -68,6 +70,11 @@ public class CameraController : MonoBehaviour
         //pos.z = Mathf.Clamp(pos.z, screenZLimits.x + transform.position.z, screenZLimits.y + transform.position.z);
 
         transform.position = pos;
+    }
+
+    private void CameraLock()
+    {
+        cameraLockOnPlayer = !cameraLockOnPlayer;
     }
 
     private void CameraOnPlayerPos(bool value)

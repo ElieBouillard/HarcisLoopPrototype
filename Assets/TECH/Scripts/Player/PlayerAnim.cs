@@ -10,6 +10,18 @@ public class PlayerAnim : MonoBehaviour
     [Range(0f, 10f)]
     [SerializeField] private float speedRun = 0.5f;
 
+    #region OnEnable / OnDisable
+    private void OnEnable()
+    {
+        PlayerInputs.CastSpellKeyPress += TriggerCastSpell;
+    }
+
+    private void OnDisable()
+    {
+        PlayerInputs.CastSpellKeyPress -= TriggerCastSpell;
+    }
+    #endregion
+
     private void Update()
     {
         if (_playerAgent.velocity.sqrMagnitude < speedRun * speedRun) { SetRun(false); return; }
@@ -22,5 +34,10 @@ public class PlayerAnim : MonoBehaviour
     private void SetRun(bool value)
     {
         _playerAnimator.SetBool("Run", value);
+    }
+
+    private void TriggerCastSpell()
+    {
+        _playerAnimator.SetTrigger("CastSpell");
     }
 }
