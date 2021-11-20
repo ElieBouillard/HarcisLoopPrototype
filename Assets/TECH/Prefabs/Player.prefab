@@ -1526,6 +1526,7 @@ MonoBehaviour:
   _playerAnimator: {fileID: 6209890886947183534}
   _playerAgent: {fileID: 5706921038898045206}
   speedRun: 1.5
+  _clickOnFloorFXPrefab: {fileID: 892622632713860640, guid: 34ba00aead6526c479f4eeed81994ebe, type: 3}
 --- !u!114 &2579141378223595090
 MonoBehaviour:
   m_ObjectHideFlags: 0
