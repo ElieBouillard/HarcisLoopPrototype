@@ -321,7 +321,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 827021350}
-  - component: {fileID: 827021351}
   m_Layer: 0
   m_Name: Studio
   m_TagString: Untagged
@@ -345,18 +344,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &827021351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 827021349}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 208697816caa0e34a9a4ead5a999bcd7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &963194225
 GameObject:
   m_ObjectHideFlags: 0
@@ -457,6 +444,303 @@ MonoBehaviour:
   speed: 12
   screenBorderThickness: 2
   cameraLockOnPlayer: 1
+--- !u!1 &1660168029
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1660168031}
+  - component: {fileID: 1660168030}
+  - component: {fileID: 1660168032}
+  m_Layer: 0
+  m_Name: Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1660168030
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660168029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6e53bfaafbc14c64d9de08b2a5790556, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _actions: []
+--- !u!4 &1660168031
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660168029}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1660168032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1660168029}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6283c92f3ed583d4494e217442f433c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerAction: 1
+  _actionsSaved:
+  - ActionType: 0
+    Timing: 0.37333333
+    MousePos: {x: -1.9439344, y: -2.5029622e-17, z: 11.272339}
+  - ActionType: 0
+    Timing: 0.41368213
+    MousePos: {x: -1.9439344, y: -2.5029622e-17, z: 11.272339}
+  - ActionType: 0
+    Timing: 0.57942474
+    MousePos: {x: -2.133954, y: -2.2245712e-17, z: 10.018578}
+  - ActionType: 0
+    Timing: 0.85290766
+    MousePos: {x: -2.3703382, y: -2.5388416e-17, z: 11.433926}
+  - ActionType: 0
+    Timing: 1.0190308
+    MousePos: {x: -2.4917243, y: -2.6994141e-17, z: 12.15708}
+  - ActionType: 2
+    Timing: 1.2974566
+    MousePos: {x: -0.19861613, y: -0.00856186, z: 0.98003995}
+  - ActionType: 0
+    Timing: 1.7066604
+    MousePos: {x: -8.608306, y: -1.7719268e-17, z: 7.9800487}
+  - ActionType: 0
+    Timing: 1.9147911
+    MousePos: {x: -11.13258, y: -1.5579508e-17, z: 7.0163865}
+  - ActionType: 3
+    Timing: 2.156506
+    MousePos: {x: -0.9920256, y: -0.008033256, z: 0.12577991}
+  - ActionType: 0
+    Timing: 2.3318083
+    MousePos: {x: -10.432902, y: -1.5002586e-17, z: 6.7565637}
+  - ActionType: 0
+    Timing: 2.544483
+    MousePos: {x: -2.3995411, y: -1.7956443e-17, z: 8.0868635}
+  - ActionType: 3
+    Timing: 3.060092
+    MousePos: {x: 0.9156328, y: -0.019902974, z: 0.40152273}
+  - ActionType: 2
+    Timing: 3.2605028
+    MousePos: {x: 0.91479725, y: -0.019879106, z: 0.403424}
+  - ActionType: 0
+    Timing: 3.5600486
+    MousePos: {x: 0.09741127, y: -2.107793e-17, z: 9.492656}
+  - ActionType: 0
+    Timing: 3.8309681
+    MousePos: {x: -3.2988513, y: -2.2937895e-17, z: 10.33031}
+  - ActionType: 0
+    Timing: 3.9956965
+    MousePos: {x: -3.6051798, y: -2.4301357e-17, z: 10.944357}
+  - ActionType: 0
+    Timing: 4.8930044
+    MousePos: {x: -0.19454613, y: -3.034412e-17, z: 13.665777}
+  - ActionType: 2
+    Timing: 5.236349
+    MousePos: {x: 0.78151625, y: -0.019143214, z: 0.62359107}
+  - ActionType: 0
+    Timing: 6.104559
+    MousePos: {x: -3.981319, y: -3.3059127e-17, z: 14.888506}
+  - ActionType: 0
+    Timing: 6.3171577
+    MousePos: {x: -4.820767, y: -3.3881007e-17, z: 15.258647}
+  - ActionType: 3
+    Timing: 6.667862
+    MousePos: {x: -0.9978486, y: -0.01710772, z: 0.06328917}
+  - ActionType: 0
+    Timing: 6.74826
+    MousePos: {x: -7.761055, y: -3.2658014e-17, z: 14.707862}
+  - ActionType: 0
+    Timing: 6.9566298
+    MousePos: {x: -7.9256077, y: -3.1423003e-17, z: 14.151661}
+  - ActionType: 2
+    Timing: 7.1559606
+    MousePos: {x: -0.9304245, y: -0.015397298, z: -0.36616004}
+  - ActionType: 0
+    Timing: 7.349228
+    MousePos: {x: -8.347987, y: -2.785492e-17, z: 12.544741}
+  - ActionType: 0
+    Timing: 7.5407
+    MousePos: {x: -8.450691, y: -2.7748396e-17, z: 12.496767}
+  - ActionType: 0
+    Timing: 7.762926
+    MousePos: {x: -9.324985, y: -2.685179e-17, z: 12.092972}
+  - ActionType: 0
+    Timing: 7.942662
+    MousePos: {x: -9.987429, y: -2.6188846e-17, z: 11.794407}
+  - ActionType: 0
+    Timing: 8.152168
+    MousePos: {x: -10.909321, y: -2.5479036e-17, z: 11.474738}
+  - ActionType: 0
+    Timing: 8.347192
+    MousePos: {x: -11.742533, y: -2.4864619e-17, z: 11.198029}
+  - ActionType: 0
+    Timing: 9.201377
+    MousePos: {x: -6.440794, y: -2.7714547e-17, z: 12.481523}
+  - ActionType: 3
+    Timing: 9.6755085
+    MousePos: {x: 0.97623354, y: -0.022093385, z: 0.21559203}
+  - ActionType: 0
+    Timing: 10.016476
+    MousePos: {x: -11.612141, y: -2.200102e-17, z: 9.908379}
+  - ActionType: 0
+    Timing: 10.206465
+    MousePos: {x: -11.922313, y: -2.1496376e-17, z: 9.681107}
+  - ActionType: 0
+    Timing: 10.389767
+    MousePos: {x: -12.474176, y: -2.0692988e-17, z: 9.319293}
+  - ActionType: 2
+    Timing: 11.1647415
+    MousePos: {x: 0.12227376, y: -0.00958198, z: 0.9924501}
+  - ActionType: 0
+    Timing: 11.698565
+    MousePos: {x: -16.324938, y: -2.6275225e-17, z: 11.833309}
+  - ActionType: 0
+    Timing: 11.901316
+    MousePos: {x: -17.030136, y: -2.7297457e-17, z: 12.293682}
+  - ActionType: 0
+    Timing: 12.079205
+    MousePos: {x: -17.758171, y: -2.827615e-17, z: 12.734447}
+  - ActionType: 0
+    Timing: 12.283518
+    MousePos: {x: -18.531216, y: -2.938189e-17, z: 13.232427}
+  - ActionType: 3
+    Timing: 12.555774
+    MousePos: {x: -0.84062237, y: -0.018135792, z: 0.54131794}
+  - ActionType: 0
+    Timing: 13.785195
+    MousePos: {x: -17.227446, y: -3.8656754e-17, z: 17.409454}
+  - ActionType: 0
+    Timing: 13.97352
+    MousePos: {x: -16.816793, y: -4.1348807e-17, z: 18.621847}
+  - ActionType: 1
+    Timing: 14.8593645
+    MousePos: {x: 0, y: 0, z: 0}
+  - ActionType: 0
+    Timing: 15.25833
+    MousePos: {x: -16.891577, y: -5.026044e-17, z: 22.635288}
+  - ActionType: 0
+    Timing: 15.477
+    MousePos: {x: -20.960197, y: -4.697788e-17, z: 21.156958}
+  - ActionType: 0
+    Timing: 15.648236
+    MousePos: {x: -23.155212, y: -4.5443202e-17, z: 20.465796}
+  - ActionType: 1
+    Timing: 15.883858
+    MousePos: {x: 0, y: 0, z: 0}
+  - ActionType: 0
+    Timing: 16.546955
+    MousePos: {x: -18.914034, y: -5.372392e-17, z: 24.195103}
+  - ActionType: 0
+    Timing: 16.744045
+    MousePos: {x: -15.001804, y: -5.2229137e-17, z: 23.52191}
+  - ActionType: 0
+    Timing: 16.925026
+    MousePos: {x: -14.292543, y: -4.574621e-17, z: 20.60226}
+  - ActionType: 0
+    Timing: 17.086401
+    MousePos: {x: -13.506624, y: -4.1449716e-17, z: 18.667292}
+  - ActionType: 3
+    Timing: 17.549843
+    MousePos: {x: 0.9993486, y: -0.015002832, z: 0.032823384}
+  - ActionType: 0
+    Timing: 17.815329
+    MousePos: {x: -12.868228, y: -4.0217743e-17, z: 18.112461}
+  - ActionType: 0
+    Timing: 18.200174
+    MousePos: {x: -13.567214, y: -3.6170994e-17, z: 16.289967}
+  - ActionType: 0
+    Timing: 18.397346
+    MousePos: {x: -13.447518, y: -3.4103333e-17, z: 15.358774}
+  - ActionType: 0
+    Timing: 18.570904
+    MousePos: {x: -13.380608, y: -3.202187e-17, z: 14.421368}
+  - ActionType: 0
+    Timing: 18.740925
+    MousePos: {x: -13.307041, y: -3.0152755e-17, z: 13.579593}
+  - ActionType: 0
+    Timing: 18.904585
+    MousePos: {x: -13.183916, y: -2.8542764e-17, z: 12.854517}
+  - ActionType: 0
+    Timing: 19.205877
+    MousePos: {x: -12.974327, y: -2.5597048e-17, z: 11.527885}
+  - ActionType: 0
+    Timing: 19.38485
+    MousePos: {x: -12.860783, y: -2.3865428e-17, z: 10.748033}
+  - ActionType: 0
+    Timing: 19.56594
+    MousePos: {x: -13.585682, y: -2.0911837e-17, z: 9.417854}
+  - ActionType: 0
+    Timing: 19.772026
+    MousePos: {x: -14.798868, y: -1.7489066e-17, z: 7.8763747}
+  - ActionType: 0
+    Timing: 19.920351
+    MousePos: {x: -15.552361, y: -1.6321134e-17, z: 7.3503847}
+  - ActionType: 0
+    Timing: 20.32707
+    MousePos: {x: -17.587437, y: -1.720086e-17, z: 7.746579}
+  - ActionType: 0
+    Timing: 20.526112
+    MousePos: {x: -19.247993, y: -1.6892414e-17, z: 7.607667}
+  - ActionType: 0
+    Timing: 20.725658
+    MousePos: {x: -20.710306, y: -1.5670381e-17, z: 7.057312}
+  - ActionType: 0
+    Timing: 20.925299
+    MousePos: {x: -21.389818, y: -1.2908918e-17, z: 5.8136597}
+  - ActionType: 0
+    Timing: 21.135988
+    MousePos: {x: -20.707687, y: -1.125622e-17, z: 5.0693507}
+  - ActionType: 0
+    Timing: 21.329
+    MousePos: {x: -18.147686, y: -1.2193129e-17, z: 5.491297}
+  - ActionType: 0
+    Timing: 21.506855
+    MousePos: {x: -15.738796, y: -1.2934634e-17, z: 5.825241}
+  - ActionType: 0
+    Timing: 21.708054
+    MousePos: {x: -13.573343, y: -1.4232476e-17, z: 6.4097376}
+  - ActionType: 0
+    Timing: 21.90261
+    MousePos: {x: -11.50666, y: -1.6092536e-17, z: 7.2474337}
+  - ActionType: 0
+    Timing: 22.065018
+    MousePos: {x: -9.974373, y: -1.7893207e-17, z: 8.058384}
+  - ActionType: 0
+    Timing: 22.23101
+    MousePos: {x: -8.835858, y: -1.9413553e-17, z: 8.743087}
+  - ActionType: 0
+    Timing: 22.402071
+    MousePos: {x: -8.162275, y: -2.0428787e-17, z: 9.200308}
+  - ActionType: 0
+    Timing: 22.586271
+    MousePos: {x: -8.100211, y: -2.3226972e-17, z: 10.460497}
+  - ActionType: 0
+    Timing: 22.777325
+    MousePos: {x: -8.378123, y: -2.6112543e-17, z: 11.760043}
+  - ActionType: 0
+    Timing: 22.9748
+    MousePos: {x: -9.031097, y: -2.8226946e-17, z: 12.712287}
+  _actionsDone: 
 --- !u!1 &1771243549
 GameObject:
   m_ObjectHideFlags: 0

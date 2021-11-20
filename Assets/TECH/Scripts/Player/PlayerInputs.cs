@@ -11,18 +11,19 @@ public class PlayerInputs : MonoBehaviour
     public static event Action<Vector3> MovementClickPress;
     public static event Action<bool> RecenterCameraKeyPress;
     public static event Action LockCameraKeyPress;
-    public static event Action CastSpellKeyPress;
+    public static event Action<Vector3> CastSpellKeyPress;
     public static event Action CastWallKeyPress;
-    public static event Action CastWallKeyRelease;
+    public static event Action<Vector3> CastWallKeyRelease;
     public static event Action StopPlayerMovementKeyPress;
 
     private void Update()
     {
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            RaycastHit hit = new RaycastHit();
-            if (!Physics.Raycast(ray, out hit, Mathf.Infinity, _floorMask)) { return; }
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+        Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, _floorMask);
+        Vector3 dir = (hit.point - transform.position).normalized;
+
+        if (Input.GetMouseButtonDown(1))        {
+            
             MovementClickPress?.Invoke(hit.point);
         }
 
@@ -37,7 +38,7 @@ public class PlayerInputs : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
-            CastSpellKeyPress?.Invoke();
+            CastSpellKeyPress?.Invoke(dir);
         }
 
         if (Input.GetKeyDown(KeyCode.S))
@@ -57,7 +58,7 @@ public class PlayerInputs : MonoBehaviour
 
         if (Input.GetKeyUp(KeyCode.E))
         {
-            CastWallKeyRelease?.Invoke();
+            CastWallKeyRelease?.Invoke(dir);
         }
     }
 }

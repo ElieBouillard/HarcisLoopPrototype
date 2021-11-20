@@ -5,6 +5,8 @@ using UnityEngine.AI;
 
 public class PlayerAnim : MonoBehaviour
 {
+    public static PlayerAnim instance;
+
     [SerializeField] private Animator _playerAnimator = null;
     [SerializeField] private NavMeshAgent _playerAgent = null;
     [Range(0f, 10f)]
@@ -27,6 +29,11 @@ public class PlayerAnim : MonoBehaviour
     }
     #endregion
 
+    private void Awake()
+    {
+        instance = this;
+    }
+
     private void Update()
     {
         if (_playerAgent.velocity.sqrMagnitude < speedRun * speedRun) { SetRun(false); return; }
@@ -41,7 +48,7 @@ public class PlayerAnim : MonoBehaviour
         _playerAnimator.SetBool("Run", value);
     }
 
-    private void TriggerCastSpell()
+    public void TriggerCastSpell(Vector3 pos)
     {
         _playerAnimator.SetTrigger("CastSpell");
     }

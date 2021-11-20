@@ -7,8 +7,6 @@ public class PlayerMovements : MonoBehaviour
 {
     public static PlayerMovements instance;
 
-    [SerializeField] private LayerMask _floorMask = new LayerMask();
-
     private NavMeshAgent _agent = null;
     private float _stopDurationClock = 0f;
 
@@ -50,12 +48,12 @@ public class PlayerMovements : MonoBehaviour
         }
     }
 
-    private void MoveAgent(Vector3 newPos)
+    public void MoveAgent(Vector3 newPos)
     {
         _agent.SetDestination(newPos);
     }
 
-    private  void StopAgentMovement()
+    public  void StopAgentMovement()
     {
         _agent.ResetPath();
     }

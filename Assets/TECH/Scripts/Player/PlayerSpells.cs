@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class PlayerSpells : MonoBehaviour
 {
+    public static PlayerSpells instance;
+
     [SerializeField] private Transform _launchProjectileTransform = null;
     [SerializeField] private GameObject _wallPreviewParent = null;
     [SerializeField] private LayerMask _floorMask = new LayerMask();
@@ -11,10 +13,7 @@ public class PlayerSpells : MonoBehaviour
     [SerializeField] private GameObject _wallPrefab = null;
     [SerializeField] private GameObject _playerUIOnFloor = null;
 
-
     private Vector3 _mouseWolrdPos = new Vector3();
-
-
 
     #region OnEnable / OnDisable
     private void OnEnable()
@@ -31,6 +30,10 @@ public class PlayerSpells : MonoBehaviour
         PlayerInputs.CastWallKeyRelease -= InstantiateWall;
     }
     #endregion
+    private void Awake()
+    {
+        instance = this;
+    }
 
     private void Update()
     {
@@ -48,9 +51,8 @@ public class PlayerSpells : MonoBehaviour
         _playerUIOnFloor.transform.forward = mouseDir;
     }
 
-    private void CastQSpell()
+    public void CastQSpell(Vector3 dir)
     {
-        Vector3 dir = (_mouseWolrdPos - transform.position).normalized;
         PlayerMovements.instance.StopAgent(0.35f);
         transform.forward = dir;
         GameObject projectileInstance = Instantiate(_projectilePrefab, _launchProjectileTransform.position, Quaternion.LookRotation(dir));
@@ -62,12 +64,14 @@ public class PlayerSpells : MonoBehaviour
         _wallPreviewParent.SetActive(true);
     }
 
-    private void InstantiateWall()
+    public void InstantiateWall(Vector3 dir)
     {
-        Instantiate(_wallPrefab, _wallPreviewParent.transform.GetChild(0).position, _wallPreviewParent.transform.GetChild(0).rotation);
-        _wallPreviewParent.SetActive(false);
-        Vector3 dir = (_mouseWolrdPos - transform.position).normalized;
-        PlayerMovements.instance.StopAgent(0.35f);
         transform.forward = dir;
+        Vector3 pos = transform.position + new Vector3(0f,0.75f,0f);
+        GameObject wallInstance = Instantiate(_wallPrefab, pos, Quaternion.identity);
+        wallInstance.transform.forward = dir;
+        wallInstance.transform.position += wallInstance.transform.forward * 2f;
+        PlayerMovements.instance.StopAgent(0.35f);
+        _wallPreviewParent.SetActive(false);
     }
 }
