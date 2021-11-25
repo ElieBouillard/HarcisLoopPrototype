@@ -14,7 +14,7 @@ public class BaseWallAnimationn : MonoBehaviour
     Vector3 scroll = Vector3.zero;
     private void Update()
     {
-        scroll += _speedScroll;
+        scroll = _speedScroll;
         _material.SetVector("_AdvancedDissolveCutoutStandardMap1Scroll", scroll);
     }
 }
