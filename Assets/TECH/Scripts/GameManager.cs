@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] private GameObject _playerPrefab;
 
-    // Update is called once per frame
-    void Update()
+    private PlayerIdentity[] _allCharactersPlayers = new PlayerIdentity[0];
+    private PlayerIdentity[] _charactersTeam0 = new PlayerIdentity[0];
+    private PlayerIdentity[] _charactersTeam1 = new PlayerIdentity[0];
+
+    private void InitializeRound()
     {
-        
+        foreach (PlayerIdentity character in _allCharactersPlayers)
+        {
+
+        }
     }
 }

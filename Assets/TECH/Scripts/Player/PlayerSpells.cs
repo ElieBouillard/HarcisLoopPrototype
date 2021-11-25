@@ -9,7 +9,7 @@ public class PlayerSpells : MonoBehaviour
     [SerializeField] private LayerMask _floorMask = new LayerMask();
     [SerializeField] private GameObject _projectilePrefab = null;
     [SerializeField] private GameObject _wallPrefab = null;
-    [SerializeField] private GameObject _playerUIOnFloor = null;
+    [SerializeField] public GameObject _playerUIOnFloor = null;
 
     private PlayerInputs _playerInputs = null;
     private PlayerMovements _playerMovement = null;
