@@ -6,23 +6,30 @@ public class ActionWriter : MonoBehaviour
 {
     [SerializeField] private List<ActionClass> _actions = new List<ActionClass>();
 
-#region OnEnable / OnDisable
+    private PlayerInputs _playerInputs = null;
+
+    #region OnEnable / OnDisable
     private void OnEnable()
     {
-        PlayerInputs.MovementClickPress += SaveMovement;
-        PlayerInputs.CastSpellKeyPress += SaveCastSpell;
-        PlayerInputs.CastWallKeyRelease += SaveCastWall;
-        PlayerInputs.StopPlayerMovementKeyPress += StopMovement;
+        _playerInputs.MovementClickPress += SaveMovement;
+        _playerInputs.CastSpellKeyPress += SaveCastSpell;
+        _playerInputs.CastWallKeyRelease += SaveCastWall;
+        _playerInputs.StopPlayerMovementKeyPress += StopMovement;
     }
 
     private void OnDisable()
     {
-        PlayerInputs.MovementClickPress -= SaveMovement;
-        PlayerInputs.CastSpellKeyPress -= SaveCastSpell;
-        PlayerInputs.CastWallKeyRelease -= SaveCastWall;
-        PlayerInputs.StopPlayerMovementKeyPress -= StopMovement;
+        _playerInputs.MovementClickPress -= SaveMovement;
+        _playerInputs.CastSpellKeyPress -= SaveCastSpell;
+        _playerInputs.CastWallKeyRelease -= SaveCastWall;
+        _playerInputs.StopPlayerMovementKeyPress -= StopMovement;
     }
     #endregion
+
+    private void Awake()
+    {
+        _playerInputs = this.gameObject.GetComponent<PlayerInputs>();
+    }
 
     float time = 0f;
 
@@ -33,25 +40,25 @@ public class ActionWriter : MonoBehaviour
 
     private void SaveCastSpell(Vector3 dir)
     {
-        ActionClass newAction = new SpellAction(ActionTypes.spell,time, dir);
+        ActionClass newAction = new ActionClass(ActionTypes.spell,time, dir);
         _actions.Add(newAction);
     }
 
     private void SaveCastWall(Vector3 dir)
     {
-        ActionClass newAction = new WallAction(ActionTypes.wall, time, dir);
+        ActionClass newAction = new ActionClass(ActionTypes.wall, time, dir);
         _actions.Add(newAction);
     }
 
     private void SaveMovement(Vector3 mousePos)
     {
-        ActionClass newAction = new MovementAction(ActionTypes.movement, time, mousePos);
+        ActionClass newAction = new ActionClass(ActionTypes.movement, time, mousePos);
         _actions.Add(newAction);
     }
 
     private void StopMovement()
     {
-        ActionClass newAction = new MovementAction(ActionTypes.stopMovement, time, Vector3.zero);
+        ActionClass newAction = new ActionClass(ActionTypes.stopMovement, time, Vector3.zero);
         _actions.Add(newAction);
     }
 }

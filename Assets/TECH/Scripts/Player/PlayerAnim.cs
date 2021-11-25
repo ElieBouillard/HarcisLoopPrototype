@@ -5,33 +5,33 @@ using UnityEngine.AI;
 
 public class PlayerAnim : MonoBehaviour
 {
-    public static PlayerAnim instance;
-
     [SerializeField] private Animator _playerAnimator = null;
     [SerializeField] private NavMeshAgent _playerAgent = null;
     [Range(0f, 10f)]
     [SerializeField] private float speedRun = 0.5f;
     [SerializeField] private GameObject _clickOnFloorFXPrefab = null;
 
+    private PlayerInputs _playerInputs = null; 
+
     #region OnEnable / OnDisable
     private void OnEnable()
     {
-        PlayerInputs.CastSpellKeyPress += TriggerCastSpell;
-        PlayerInputs.CastWallKeyRelease += TriggerCastSpell;
-        PlayerInputs.MovementClickPress += CastClickOnFloorFX;
+        _playerInputs.CastSpellKeyPress += TriggerCastSpell;
+        _playerInputs.CastWallKeyRelease += TriggerCastSpell;
+        _playerInputs.MovementClickPress += CastClickOnFloorFX;
     }
 
     private void OnDisable()
     {
-        PlayerInputs.CastSpellKeyPress -= TriggerCastSpell;
-        PlayerInputs.CastWallKeyRelease -= TriggerCastSpell;
-        PlayerInputs.MovementClickPress -= CastClickOnFloorFX;
+        _playerInputs.CastSpellKeyPress -= TriggerCastSpell;
+        _playerInputs.CastWallKeyRelease -= TriggerCastSpell;
+        _playerInputs.MovementClickPress -= CastClickOnFloorFX;
     }
     #endregion
 
     private void Awake()
     {
-        instance = this;
+        _playerInputs = this.gameObject.GetComponent<PlayerInputs>();
     }
 
     private void Update()

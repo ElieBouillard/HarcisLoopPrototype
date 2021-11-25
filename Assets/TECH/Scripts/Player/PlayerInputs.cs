@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class PlayerInputs : MonoBehaviour
 {
-    [SerializeField] private Camera _mainCamera = null;
     [SerializeField] private LayerMask _floorMask = new LayerMask();
 
-    public static event Action<Vector3> MovementClickPress;
-    public static event Action<bool> RecenterCameraKeyPress;
-    public static event Action LockCameraKeyPress;
-    public static event Action<Vector3> CastSpellKeyPress;
-    public static event Action CastWallKeyPress;
-    public static event Action<Vector3> CastWallKeyRelease;
-    public static event Action StopPlayerMovementKeyPress;
+    public event Action<Vector3> MovementClickPress;
+    public event Action<bool> RecenterCameraKeyPress;
+    public event Action LockCameraKeyPress;
+    public event Action<Vector3> CastSpellKeyPress;
+    public event Action CastWallKeyPress;
+    public event Action<Vector3> CastWallKeyRelease;
+    public event Action StopPlayerMovementKeyPress;
 
     private void Update()
     {

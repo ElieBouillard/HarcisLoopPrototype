@@ -4,15 +4,20 @@ using UnityEngine;
 
 public class ObjectiveFlag : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    #region OnEnable / OnDisable
+    private void OnEnable()
     {
-        
+        PlayerObjectiveGetter.PlayerCatchFlag += SelfDestroy;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-        
+        PlayerObjectiveGetter.PlayerCatchFlag -= SelfDestroy;
+    }
+    #endregion
+
+    private void SelfDestroy()
+    {
+        this.gameObject.SetActive(false);
     }
 }

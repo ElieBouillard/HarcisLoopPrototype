@@ -5,33 +5,29 @@ using UnityEngine.AI;
 
 public class PlayerMovements : MonoBehaviour
 {
-    public static PlayerMovements instance;
+    private PlayerInputs _playerInputs;
 
     private NavMeshAgent _agent = null;
     private float _stopDurationClock = 0f;
 
-#region OnEnable/OnDisable
+    #region OnEnable/OnDisable
 
     private void OnEnable()
     {
-        PlayerInputs.MovementClickPress += MoveAgent;
-        PlayerInputs.StopPlayerMovementKeyPress += StopAgentMovement;
+        _playerInputs.MovementClickPress += MoveAgent;
+        _playerInputs.StopPlayerMovementKeyPress += StopAgentMovement;
     }
 
     private void OnDisable()
     {
-        PlayerInputs.MovementClickPress -= MoveAgent;
-        PlayerInputs.StopPlayerMovementKeyPress -= StopAgentMovement;
+        _playerInputs.MovementClickPress -= MoveAgent;
+        _playerInputs.StopPlayerMovementKeyPress -= StopAgentMovement;
     }
     #endregion
 
     private void Awake()
     {
-        instance = this;
-    }
-
-    private void Start()
-    {
+        _playerInputs = this.gameObject.GetComponent<PlayerInputs>();
         _agent = this.gameObject.GetComponent<NavMeshAgent>();
     }
 

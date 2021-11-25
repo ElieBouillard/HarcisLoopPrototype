@@ -2,16 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActionPlayer : MonoBehaviour
+public class ActionReader : MonoBehaviour
 {
     public bool playerAction = false;
     public ActionClass[] _actionsSaved = new ActionClass[0];
     public bool[] _actionsDone = new bool[0];
 
+    private PlayerMovements _playerMovements = null;
+    private PlayerSpells _playerSpells = null;
+    private PlayerAnim _playerAnim = null;
+
     float time = 0f;
 
-    private void Start()
+    private void Awake()
     {
+        _playerMovements = this.gameObject.GetComponent<PlayerMovements>();
+        _playerSpells = this.gameObject.GetComponent<PlayerSpells>();
+        _playerAnim = this.gameObject.GetComponent<PlayerAnim>();
         _actionsDone = new bool[_actionsSaved.Length];
     }
 
@@ -23,26 +30,25 @@ public class ActionPlayer : MonoBehaviour
 
         for (int i = 0; i < _actionsSaved.Length; i++)
         {
-            if (_actionsSaved[i].Timing < time + 0.5f && _actionsSaved[i].Timing > time - 0.5f)
+            if (_actionsSaved[i].Timing < time + 0.1f && _actionsSaved[i].Timing > time - 0.1f)
             {
                 if(_actionsDone[i] == false)
                 {
                     switch (_actionsSaved[i].ActionType)
                     {
                         case ActionTypes.movement:
-                            PlayerMovements.instance.MoveAgent(_actionsSaved[i].MousePos);
-                            Debug.Log("dd");
+                            _playerMovements.MoveAgent(_actionsSaved[i].MousePos);
                             break;
                         case ActionTypes.stopMovement:
-                            PlayerMovements.instance.StopAgentMovement();
+                            _playerMovements.StopAgentMovement();
                             break;
                         case ActionTypes.spell:
-                            PlayerSpells.instance.CastQSpell(_actionsSaved[i].MousePos);
-                            PlayerAnim.instance.TriggerCastSpell(_actionsSaved[i].MousePos);
+                            _playerSpells.CastQSpell(_actionsSaved[i].MousePos);
+                            _playerAnim.TriggerCastSpell(_actionsSaved[i].MousePos);
                             break;
                         case ActionTypes.wall:
-                            PlayerSpells.instance.InstantiateWall(_actionsSaved[i].MousePos);
-                            PlayerAnim.instance.TriggerCastSpell(_actionsSaved[i].MousePos);
+                            _playerSpells.InstantiateWall(_actionsSaved[i].MousePos);
+                            _playerAnim.TriggerCastSpell(_actionsSaved[i].MousePos);
                             break;
                         case ActionTypes.nothing:
                             break;

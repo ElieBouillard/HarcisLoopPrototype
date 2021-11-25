@@ -15,19 +15,26 @@ public class CameraController : MonoBehaviour
     //[SerializeField] private Vector2 screenXLimits = Vector2.zero;
     //[SerializeField] private Vector2 screenZLimits = Vector2.zero;
 
+    private PlayerInputs _playerInputs = null;
+
 #region OnEnable/OnDisable
     private void OnEnable()
     {
-        PlayerInputs.RecenterCameraKeyPress += CameraOnPlayerPos;
-        PlayerInputs.LockCameraKeyPress += CameraLock;
+        _playerInputs.RecenterCameraKeyPress += CameraOnPlayerPos;
+        _playerInputs.LockCameraKeyPress += CameraLock;
     }
 
     private void OnDisable()
     {
-        PlayerInputs.RecenterCameraKeyPress -= CameraOnPlayerPos;
-        PlayerInputs.LockCameraKeyPress -= CameraLock;
+        _playerInputs.RecenterCameraKeyPress -= CameraOnPlayerPos;
+        _playerInputs.LockCameraKeyPress -= CameraLock;
     }
-#endregion
+    #endregion
+
+    private void Awake()
+    {
+        _playerInputs = _player.gameObject.GetComponent<PlayerInputs>();
+    }
 
     private void Update()
     {

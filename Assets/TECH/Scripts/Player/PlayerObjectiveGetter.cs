@@ -5,13 +5,21 @@ using UnityEngine;
 
 public class PlayerObjectiveGetter : MonoBehaviour
 {
-    public static event Action<GameObject> OnPlayerGetFlag; 
+    private PlayerIdentity _playerIdentity;
+
+    public static event Action PlayerCatchFlag;
+
+    private void Start()
+    {
+        _playerIdentity = this.gameObject.GetComponent<PlayerIdentity>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.GetComponent<ObjectiveFlag>())
         {
-            OnPlayerGetFlag?.Invoke(this.gameObject);
+            PlayerCatchFlag?.Invoke();
+            _playerIdentity.PlayerCatchFlag();
         }
     }
 }

@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class PlayerSpells : MonoBehaviour
 {
-    public static PlayerSpells instance;
-
     [SerializeField] private Transform _launchProjectileTransform = null;
     [SerializeField] private GameObject _wallPreviewParent = null;
     [SerializeField] private LayerMask _floorMask = new LayerMask();
@@ -13,26 +11,31 @@ public class PlayerSpells : MonoBehaviour
     [SerializeField] private GameObject _wallPrefab = null;
     [SerializeField] private GameObject _playerUIOnFloor = null;
 
+    private PlayerInputs _playerInputs = null;
+    private PlayerMovements _playerMovement = null;
+    
     private Vector3 _mouseWolrdPos = new Vector3();
 
     #region OnEnable / OnDisable
     private void OnEnable()
     {
-        PlayerInputs.CastSpellKeyPress += CastQSpell;
-        PlayerInputs.CastWallKeyPress += CastWallPreview;
-        PlayerInputs.CastWallKeyRelease += InstantiateWall;
+        _playerInputs.CastSpellKeyPress += CastQSpell;
+        _playerInputs.CastWallKeyPress += CastWallPreview;
+        _playerInputs.CastWallKeyRelease += InstantiateWall;
     }
 
     private void OnDisable()
     {
-        PlayerInputs.CastSpellKeyPress -= CastQSpell;
-        PlayerInputs.CastWallKeyPress -= CastWallPreview;
-        PlayerInputs.CastWallKeyRelease -= InstantiateWall;
+        _playerInputs.CastSpellKeyPress -= CastQSpell;
+        _playerInputs.CastWallKeyPress -= CastWallPreview;
+        _playerInputs.CastWallKeyRelease -= InstantiateWall;
     }
     #endregion
+
     private void Awake()
     {
-        instance = this;
+        _playerInputs = this.gameObject.GetComponent<PlayerInputs>();
+        _playerMovement = this.gameObject.GetComponent<PlayerMovements>();
     }
 
     private void Update()
@@ -47,13 +50,13 @@ public class PlayerSpells : MonoBehaviour
             _wallPreviewParent.transform.forward = mouseDir;
         }
 
-        if (_playerUIOnFloor == null) { return; }
+        if (_playerUIOnFloor == null || !_playerUIOnFloor.activeSelf) { return; }
         _playerUIOnFloor.transform.forward = mouseDir;
     }
 
     public void CastQSpell(Vector3 dir)
     {
-        PlayerMovements.instance.StopAgent(0.35f);
+        _playerMovement.StopAgent(0.35f);
         transform.forward = dir;
         GameObject projectileInstance = Instantiate(_projectilePrefab, _launchProjectileTransform.position, Quaternion.LookRotation(dir));
         projectileInstance.GetComponent<Projectile>().SetPos(_launchProjectileTransform.position);
@@ -71,7 +74,7 @@ public class PlayerSpells : MonoBehaviour
         GameObject wallInstance = Instantiate(_wallPrefab, pos, Quaternion.identity);
         wallInstance.transform.forward = dir;
         wallInstance.transform.position += wallInstance.transform.forward * 2f;
-        PlayerMovements.instance.StopAgent(0.35f);
+        _playerMovement.StopAgent(0.35f);
         _wallPreviewParent.SetActive(false);
     }
 }
