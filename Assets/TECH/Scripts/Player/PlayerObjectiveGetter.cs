@@ -19,7 +19,7 @@ public class PlayerObjectiveGetter : MonoBehaviour
         if (other.gameObject.GetComponent<ObjectiveFlag>())
         {
             PlayerCatchFlag?.Invoke();
-            _playerIdentity.PlayerCatchFlag();
+            _playerIdentity.SetPlayerCatchFlag(true);
         }
     }
 }

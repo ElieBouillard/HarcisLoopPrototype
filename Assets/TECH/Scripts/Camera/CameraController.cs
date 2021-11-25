@@ -38,6 +38,7 @@ public class CameraController : MonoBehaviour
 
     private void Update()
     {
+
         if (!Application.isFocused) { return; }
 
         if (cameraLockOnPlayer)
@@ -87,5 +88,10 @@ public class CameraController : MonoBehaviour
     private void CameraOnPlayerPos(bool value)
     {
         cameraLockOnPlayer = value;
+    }
+
+    public void SetCharacterOnCamera(GameObject character)
+    {
+        _player = character;
     }
 }

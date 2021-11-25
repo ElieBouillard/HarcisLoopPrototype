@@ -22,6 +22,31 @@ public class ActionReader : MonoBehaviour
         _actionsDone = new bool[_actionsSaved.Length];
     }
 
+    public void StartRound()
+    {
+        time = 0f;
+        for (int i = 0; i < _actionsDone.Length; i++)
+        {
+            _actionsDone[i] = false;
+        }
+        playerAction = true;
+    }
+
+    public void SaveActions(ActionClass[] newActions)
+    {
+        _actionsSaved = new ActionClass[newActions.Length];
+        _actionsDone = new bool[newActions.Length];
+        for (int i = 0; i < newActions.Length; i++)
+        {
+            _actionsSaved[i] = newActions[i];
+        }
+    }
+
+    public void EndRound()
+    {
+        playerAction = false;
+    }
+
     private void Update()
     {
         if(!playerAction) { return; }

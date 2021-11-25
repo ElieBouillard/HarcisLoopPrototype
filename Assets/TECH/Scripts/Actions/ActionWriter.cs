@@ -38,6 +38,11 @@ public class ActionWriter : MonoBehaviour
         time += Time.deltaTime;
     }
 
+    public ActionClass[] GetActions()
+    {
+        return _actions.ToArray();
+    }
+
     private void SaveCastSpell(Vector3 dir)
     {
         ActionClass newAction = new ActionClass(ActionTypes.spell,time, dir);
