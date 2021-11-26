@@ -51,5 +51,10 @@ public class Projectile : MonoBehaviour
 
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(_damage);
         }
+
+        if (other.gameObject.GetComponent<Wall>())
+        {
+            Destroy(this.gameObject);
+        }
     }
 }

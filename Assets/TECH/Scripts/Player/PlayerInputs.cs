@@ -37,6 +37,7 @@ public class PlayerInputs : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.A))
         {
+            if (this.gameObject.GetComponent<PlayerSpells>()._projectileCouldown >= 0) { return; }
             CastSpellKeyPress?.Invoke(dir);
         }
 
@@ -52,11 +53,13 @@ public class PlayerInputs : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E))
         {
+            if (this.gameObject.GetComponent<PlayerSpells>()._wallCouldown) { return; }
             CastWallKeyPress?.Invoke();
         }
 
         if (Input.GetKeyUp(KeyCode.E))
         {
+            if (this.gameObject.GetComponent<PlayerSpells>()._wallCouldown) { return; }
             CastWallKeyRelease?.Invoke(dir);
         }
     }

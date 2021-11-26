@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
     [SerializeField] private Color[] _teamColors = new Color[0];
 
     private List<PlayerIdentity> _allCharactersPlayers = new List<PlayerIdentity>();
+    private List<PlayerIdentity> _team0InLive = new List<PlayerIdentity>();
+    private List<PlayerIdentity> _team1InLive = new List<PlayerIdentity>();
 
     private int teamIndex = 0;
 
@@ -29,6 +31,9 @@ public class GameManager : MonoBehaviour
 
     private void InitializeRound()
     {
+        _team0InLive = new List<PlayerIdentity>();
+        _team1InLive = new List<PlayerIdentity>();
+
         _objectifFlag.SetActive(true);
         GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
         GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
@@ -41,22 +46,25 @@ public class GameManager : MonoBehaviour
         foreach (PlayerIdentity character in _allCharactersPlayers)
         {
             character.SetCharacterPlayable(false);
-            character.gameObject.SetActive(true);
             character.gameObject.GetComponent<PlayerHealth>();
             character._actionReader.StartRound();
             if(character.GetTeamIndex() == 0)
             {
                 character.gameObject.transform.position = _team0SpawnPos.transform.position; 
                 character.transform.rotation = _team0SpawnPos.transform.rotation;
+                _team0InLive.Add(character);
             }
             else 
             { 
                 character.gameObject.transform.position = _team1SpawnPos.transform.position;
                 character.transform.rotation = _team1SpawnPos.transform.rotation; 
+                _team1InLive.Add(character);
             }
             character.GetComponent<PlayerMovements>().StopAgentMovement();
             character.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[character.GetTeamIndex()]);
             if (character.GetPlayFlagStatus()) { character.SetPlayerCatchFlag(false); character.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[2]); }
+            character.GetComponent<PlayerHealth>().ResetHeal();
+            character.gameObject.SetActive(true);
         }
 
         Vector3 spawnPoint = Vector3.zero;
@@ -69,6 +77,14 @@ public class GameManager : MonoBehaviour
         _allCharactersPlayers.Add(currCharacterIdentity);
         _cameraController.AssignNewPlayerForCamera(currCharacter);
         currCharacterIdentity.SetTeamIndex(teamIndex);
+    }
+
+    public void CharacterKilled(PlayerIdentity currPlayerIdentity)
+    {
+        if(_team0InLive.Contains(currPlayerIdentity)) { _team0InLive.Remove(currPlayerIdentity); }
+        if(_team1InLive.Contains(currPlayerIdentity)) { _team0InLive.Remove(currPlayerIdentity); }
+
+        if(_team0InLive.Count == 0 || _team1InLive.Count == 0) { EndRound(); }
     }
 
     public void EndRound()
