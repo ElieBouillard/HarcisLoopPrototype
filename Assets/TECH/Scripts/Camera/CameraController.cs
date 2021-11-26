@@ -20,20 +20,32 @@ public class CameraController : MonoBehaviour
 #region OnEnable/OnDisable
     private void OnEnable()
     {
+        if(_playerInputs == null) { return; }
         _playerInputs.RecenterCameraKeyPress += CameraOnPlayerPos;
         _playerInputs.LockCameraKeyPress += CameraLock;
     }
 
     private void OnDisable()
     {
+        if (_playerInputs == null) { return; }
         _playerInputs.RecenterCameraKeyPress -= CameraOnPlayerPos;
         _playerInputs.LockCameraKeyPress -= CameraLock;
     }
     #endregion
 
-    private void Awake()
+    public void AssignNewPlayerForCamera(GameObject newCharacter)
     {
+        _player = newCharacter;
+
+        if(_playerInputs != null)
+        {
+            _playerInputs.RecenterCameraKeyPress -= CameraOnPlayerPos;
+            _playerInputs.LockCameraKeyPress -= CameraLock;
+        }
+
         _playerInputs = _player.gameObject.GetComponent<PlayerInputs>();
+        _playerInputs.RecenterCameraKeyPress += CameraOnPlayerPos;
+        _playerInputs.LockCameraKeyPress += CameraLock;
     }
 
     private void Update()
@@ -88,10 +100,5 @@ public class CameraController : MonoBehaviour
     private void CameraOnPlayerPos(bool value)
     {
         cameraLockOnPlayer = value;
-    }
-
-    public void SetCharacterOnCamera(GameObject character)
-    {
-        _player = character;
     }
 }

@@ -1434,12 +1434,13 @@ GameObject:
   - component: {fileID: 1060862418296893562}
   - component: {fileID: 2579141378223595090}
   - component: {fileID: 2952043707605424080}
+  - component: {fileID: 2835482964886389251}
   - component: {fileID: 8777573532787516061}
   - component: {fileID: 6416322888143837831}
   - component: {fileID: 460254507239131323}
   - component: {fileID: 3014435662340348224}
   - component: {fileID: 7398402310396119395}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1474,7 +1475,7 @@ NavMeshAgent:
   m_GameObject: {fileID: 5706921038898045207}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.4
+  m_Radius: 0.01
   m_Speed: 4.5
   m_Acceleration: 999
   avoidancePriority: 25
@@ -1499,7 +1500,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fe4d598e4b01f5d48963ab9578e24267, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mainCamera: {fileID: 0}
   _floorMask:
     serializedVersion: 2
     m_Bits: 8
@@ -1563,6 +1563,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ae1e10ea5895e0479f62be26395c32d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _actionWriter: {fileID: 0}
+  _actionReader: {fileID: 0}
+--- !u!114 &2835482964886389251
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5706921038898045207}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d0009b4b92ee1314cb8b9a669de8e347, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _renderer: {fileID: 4229157241825867561}
 --- !u!114 &8777573532787516061
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2351,7 +2366,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 4018060002910663725, guid: b510f4841f021a9448ef4bfdf769fc5f, type: 3}
+  - {fileID: 2100000, guid: 984d2f171b396af449cff1b4ce97a057, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

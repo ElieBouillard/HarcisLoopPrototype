@@ -55,7 +55,7 @@ public class ActionReader : MonoBehaviour
 
         for (int i = 0; i < _actionsSaved.Length; i++)
         {
-            if (_actionsSaved[i].Timing < time + 0.1f && _actionsSaved[i].Timing > time - 0.1f)
+            if (_actionsSaved[i].Timing < time + 0.01f && _actionsSaved[i].Timing > time - 0.01f)
             {
                 if(_actionsDone[i] == false)
                 {

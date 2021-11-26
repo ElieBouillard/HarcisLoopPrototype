@@ -16,6 +16,7 @@ public class PlayerObjectiveGetter : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
+        if(_playerIdentity.GetTeamIndex() != 0) { return; }
         if (other.gameObject.GetComponent<ObjectiveFlag>())
         {
             PlayerCatchFlag?.Invoke();

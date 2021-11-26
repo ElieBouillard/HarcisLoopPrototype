@@ -6,8 +6,8 @@ public class PlayerIdentity : MonoBehaviour
 {
     private PlayerInputs _playerInputs = null;
     private PlayerSpells _playerSpells = null;
-    public ActionWriter _actionWriter = null;
-    public ActionReader _actionReader = null;
+    [HideInInspector] public ActionWriter _actionWriter = null;
+    [HideInInspector] public ActionReader _actionReader = null;
 
     private int _teamIndex = 0;
     private bool _getFlag = false;
