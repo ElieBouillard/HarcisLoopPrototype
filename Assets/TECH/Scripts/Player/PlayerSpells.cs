@@ -11,6 +11,7 @@ public class PlayerSpells : MonoBehaviour
     [SerializeField] private GameObject _wallPrefab = null;
     [SerializeField] public GameObject _playerUIOnFloor = null;
 
+    private PlayerIdentity _playerIdentity = null;
     private PlayerInputs _playerInputs = null;
     private PlayerMovements _playerMovement = null;
     
@@ -34,6 +35,7 @@ public class PlayerSpells : MonoBehaviour
 
     private void Awake()
     {
+        _playerIdentity = this.gameObject.GetComponent<PlayerIdentity>();
         _playerInputs = this.gameObject.GetComponent<PlayerInputs>();
         _playerMovement = this.gameObject.GetComponent<PlayerMovements>();
     }
@@ -59,7 +61,9 @@ public class PlayerSpells : MonoBehaviour
         _playerMovement.StopAgent(0.35f);
         transform.forward = dir;
         GameObject projectileInstance = Instantiate(_projectilePrefab, _launchProjectileTransform.position, Quaternion.LookRotation(dir));
-        projectileInstance.GetComponent<Projectile>().SetPos(_launchProjectileTransform.position);
+        Projectile currProjectileScpt = projectileInstance.GetComponent<Projectile>();
+        currProjectileScpt.SetPos(_launchProjectileTransform.position);
+        currProjectileScpt.SetTeamIndex(_playerIdentity.GetTeamIndex());
     }
 
     private void CastWallPreview()

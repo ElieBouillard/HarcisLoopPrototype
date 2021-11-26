@@ -41,6 +41,8 @@ public class GameManager : MonoBehaviour
         foreach (PlayerIdentity character in _allCharactersPlayers)
         {
             character.SetCharacterPlayable(false);
+            character.gameObject.SetActive(true);
+            character.gameObject.GetComponent<PlayerHealth>();
             character._actionReader.StartRound();
             if(character.GetTeamIndex() == 0)
             {

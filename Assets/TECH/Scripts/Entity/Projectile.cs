@@ -6,9 +6,11 @@ public class Projectile : MonoBehaviour
 {
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _spellRangeDestroy = 2f;
+    [SerializeField] private float _damage = 20f;
 
     private Rigidbody _rigidBody = null;
     private Vector3 _startPos = new Vector3();
+    private int _teamIndex = -1;
 
     private void Start()
     {
@@ -25,6 +27,11 @@ public class Projectile : MonoBehaviour
         }
     }
 
+    public void SetTeamIndex(int value)
+    {
+        _teamIndex = value;
+    }
+
     public void SetPos(Vector3 newPos)
     {
         _startPos = newPos;
@@ -34,5 +41,15 @@ public class Projectile : MonoBehaviour
     private void SelfDestroy()
     {
         Destroy(this.gameObject);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.TryGetComponent<PlayerIdentity>(out PlayerIdentity playerIdentity))
+        {
+            if(playerIdentity.GetTeamIndex() == _teamIndex) { return; }
+
+            other.gameObject.GetComponent<PlayerHealth>().TakeDamage(_damage);
+        }
     }
 }
