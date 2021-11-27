@@ -45,9 +45,11 @@ public class GameManager : MonoBehaviour
 
         foreach (PlayerIdentity character in _allCharactersPlayers)
         {
+            character.gameObject.SetActive(true);
             character.SetCharacterPlayable(false);
             character.gameObject.GetComponent<PlayerHealth>();
             character._actionReader.StartRound();
+
             if(character.GetTeamIndex() == 0)
             {
                 character.gameObject.transform.position = _team0SpawnPos.transform.position; 
@@ -60,11 +62,11 @@ public class GameManager : MonoBehaviour
                 character.transform.rotation = _team1SpawnPos.transform.rotation; 
                 _team1InLive.Add(character);
             }
+
             character.GetComponent<PlayerMovements>().StopAgentMovement();
             character.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[character.GetTeamIndex()]);
             if (character.GetPlayFlagStatus()) { character.SetPlayerCatchFlag(false); character.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[2]); }
             character.GetComponent<PlayerHealth>().ResetHeal();
-            character.gameObject.SetActive(true);
         }
 
         Vector3 spawnPoint = Vector3.zero;

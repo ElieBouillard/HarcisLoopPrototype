@@ -26,12 +26,12 @@ public class PlayerHealth : MonoBehaviour
 
         if(_currHealth <= 0)
         {
+            this.gameObject.SetActive(false);
             GameManager.instance.CharacterKilled(this.gameObject.GetComponent<PlayerIdentity>());
             if (this.gameObject.GetComponent<PlayerIdentity>().GetPlayFlagStatus())
             {
                 GameManager.instance.EndRound();
             }
-            this.gameObject.SetActive(false);
         }
     }
 }
