@@ -1770,13 +1770,13 @@ MonoBehaviour:
     serializedVersion: 2
     rgba: 4294967295
   m_fontColor: {r: 1, g: 1, b: 1, a: 1}
-  m_enableVertexGradient: 0
-  m_colorMode: 3
+  m_enableVertexGradient: 1
+  m_colorMode: 1
   m_fontColorGradient:
-    topLeft: {r: 1, g: 1, b: 1, a: 1}
-    topRight: {r: 1, g: 1, b: 1, a: 1}
-    bottomLeft: {r: 1, g: 1, b: 1, a: 1}
-    bottomRight: {r: 1, g: 1, b: 1, a: 1}
+    topLeft: {r: 0.20000002, g: 0.7176471, b: 0.8470589, a: 1}
+    topRight: {r: 0.6745098, g: 0.3137255, b: 0.9568628, a: 1}
+    bottomLeft: {r: 0.20000002, g: 0.7176471, b: 0.8470589, a: 1}
+    bottomRight: {r: 0.6745098, g: 0.3137255, b: 0.9568628, a: 1}
   m_fontColorGradientPreset: {fileID: 0}
   m_spriteAsset: {fileID: 0}
   m_tintAllSprites: 0
@@ -2942,7 +2942,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c440af20b5031ba488ff17c136b09fbf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _initialStartRoundCouldown: 1
+  _initialStartRoundCouldown: 3
   _cameraController: {fileID: 963194229}
   _playerPrefab: {fileID: 5706921038898045207, guid: 7b09debd67a77d144b2f1bdbda0209e4, type: 3}
   _objectifFlag: {fileID: 506461486}

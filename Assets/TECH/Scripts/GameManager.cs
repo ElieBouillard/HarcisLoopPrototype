@@ -55,6 +55,7 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+        _waitingScreen.SetActive(false);
     }
 
     private void Start()
