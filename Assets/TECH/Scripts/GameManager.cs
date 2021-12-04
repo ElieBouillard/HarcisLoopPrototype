@@ -2,17 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("Parameters")]
+    [SerializeField] private float _initialStartRoundCouldown = 3f;
+
+    [Space(20)]
     [Header("References")]
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private GameObject _playerPrefab = null;
     [SerializeField] public ObjectiveFlag _objectifFlag = null;
     [SerializeField] private GameObject _waitingScreen = null;
     [SerializeField] private TMP_Text _teamIndexInfoText = null;
+    [SerializeField] private TMP_Text _couldownText = null;
     [Space(20)]
     [SerializeField] private Transform[] _team0StartPos = null;
     [Space(20)]
@@ -32,6 +38,7 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public bool _waitingForRound = false;
 
+    private float _startRoundCouldown = 0f;
 
     #region OnEnable / OnDisable
     private void OnEnable()
@@ -48,7 +55,12 @@ public class GameManager : MonoBehaviour
     private void Awake()
     {
         instance = this;
+    }
+
+    private void Start()
+    {
         InitializeRound();
+        InitializeCouldown();
     }
 
     private void Update()
@@ -60,17 +72,29 @@ public class GameManager : MonoBehaviour
                 InitializeRound();
                 _waitingScreen.SetActive(false);
                 _waitingForRound = false;
+                InitializeCouldown();
             }
+        }
+
+        if(_startRoundCouldown == -1) { return; }
+
+        if(_startRoundCouldown > 0)
+        {
+            _startRoundCouldown -= Time.deltaTime;
+            double couldownSec = Math.Ceiling(_startRoundCouldown);
+            _couldownText.text = couldownSec.ToString();
+        }
+        else
+        {
+            _couldownText.text = "";
+            StartRound();
+            _startRoundCouldown = -1;
         }
     }
 
-    private void DestroyAllEntity()
+    private void InitializeCouldown()
     {
-        GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
-        GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
-
-        foreach (GameObject wall in walls) { Destroy(wall); }
-        foreach (GameObject projectile in projectiles) { Destroy(projectile); }
+        _startRoundCouldown = _initialStartRoundCouldown;
     }
 
     private void InitializeRound()
@@ -90,7 +114,6 @@ public class GameManager : MonoBehaviour
 
                 currPlayer.gameObject.SetActive(true);
                 currPlayer.SetCharacterPlayable(false);
-                currPlayer._actionReader.StartRound();
 
                 if (_allCharactersPlayers[i].GetTeamIndex() == 0)
                 {
@@ -118,6 +141,20 @@ public class GameManager : MonoBehaviour
         InitializeNewCharacter();
     }
 
+    private void StartRound()
+    {
+        if(_allCharactersPlayers.Count > 0)
+        {
+            for (int i = 0; i < _allCharactersPlayers.Count; i++)
+            {
+                PlayerIdentity currPlayer = _allCharactersPlayers[i];
+                currPlayer._actionReader.StartRound();
+            }
+        }
+        _currCharacterIdentity.SetCharacterPlayable(true);
+        _currCharacterIdentity._actionWriter.StartWrite();
+    }
+
     public void InitializeNewCharacter()
     {
         Vector3 spawnPoint = Vector3.zero;
@@ -142,6 +179,8 @@ public class GameManager : MonoBehaviour
 
         if (currRoundTeamId == 0) { _team0InLive.Add(_currCharacterIdentity); }
         else if (currRoundTeamId == 1) { _team1InLive.Add(_currCharacterIdentity); }
+
+        _currCharacterIdentity.SetCharacterPlayable(false);
     }
 
     public void CharacterKilled(PlayerIdentity currPlayerIdentity)
@@ -156,6 +195,15 @@ public class GameManager : MonoBehaviour
         }
 
         if(_team0InLive.Count == 0 || _team1InLive.Count == 0) { EndRound(); }
+    }
+
+    private void DestroyAllEntity()
+    {
+        GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
+        GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
+
+        foreach (GameObject wall in walls) { Destroy(wall); }
+        foreach (GameObject projectile in projectiles) { Destroy(projectile); }
     }
 
     public void EndRound()

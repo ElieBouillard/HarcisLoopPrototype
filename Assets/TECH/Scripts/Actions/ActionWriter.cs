@@ -38,6 +38,11 @@ public class ActionWriter : MonoBehaviour
         time += Time.deltaTime;
     }
 
+    public void StartWrite()
+    {
+        time = 0f;
+    }
+
     public ActionClass[] GetActions()
     {
         return _actions.ToArray();
