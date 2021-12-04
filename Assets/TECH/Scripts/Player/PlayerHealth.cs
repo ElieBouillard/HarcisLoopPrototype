@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,8 @@ public class PlayerHealth : MonoBehaviour
     [SerializeField] private float _initialHealth = 100f;
     [SerializeField] private Image _healthBarImg = null;
     private float _currHealth;
+
+    public static event Action<PlayerIdentity> PlayerDead;
 
     private void Start()
     {
@@ -26,12 +29,17 @@ public class PlayerHealth : MonoBehaviour
 
         if(_currHealth <= 0)
         {
-            this.gameObject.SetActive(false);
-            GameManager.instance.CharacterKilled(this.gameObject.GetComponent<PlayerIdentity>());
-            if (this.gameObject.GetComponent<PlayerIdentity>().GetPlayFlagStatus())
+            if (this.gameObject.TryGetComponent<PlayerIdentity>(out PlayerIdentity   playerIdentity))
             {
-                GameManager.instance.EndRound();
+                PlayerDead?.Invoke(playerIdentity);
+
+                if (playerIdentity.GetPlayFlagStatus())
+                {
+                    playerIdentity.DropFlag();
+                }
             }
+
+            this.gameObject.SetActive(false);
         }
     }
 }

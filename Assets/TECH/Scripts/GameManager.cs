@@ -1,27 +1,49 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
 
+    [Header("References")]
     [SerializeField] private CameraController _cameraController = null;
     [SerializeField] private GameObject _playerPrefab = null;
-    [SerializeField] private GameObject _team0SpawnPos = null;
-    [SerializeField] private GameObject _team1SpawnPos = null;
-    [SerializeField] private GameObject _objectifFlag = null;
-
+    [SerializeField] public ObjectiveFlag _objectifFlag = null;
+    [SerializeField] private GameObject _waitingScreen = null;
+    [SerializeField] private TMP_Text _teamIndexInfoText = null;
+    [Space(20)]
+    [SerializeField] private Transform[] _team0StartPos = null;
+    [Space(20)]
+    [SerializeField] private Transform[] _team1StartPos = null;    
+    [Space(20)]
     [SerializeField] private Color[] _teamColors = new Color[0];
 
     private List<PlayerIdentity> _allCharactersPlayers = new List<PlayerIdentity>();
+
     private List<PlayerIdentity> _team0InLive = new List<PlayerIdentity>();
     private List<PlayerIdentity> _team1InLive = new List<PlayerIdentity>();
 
-    private int teamIndex = 0;
+    private int currRoundTeamId = 0;
 
-    private GameObject currCharacter = null;
-    private PlayerIdentity currCharacterIdentity = null;
+    private GameObject _currCharacter = null;
+    private PlayerIdentity _currCharacterIdentity = null;
+
+    [HideInInspector] public bool _waitingForRound = false;
+
+
+    #region OnEnable / OnDisable
+    private void OnEnable()
+    {
+        PlayerHealth.PlayerDead += CharacterKilled; 
+    }
+
+    private void OnDisable()
+    {
+        PlayerHealth.PlayerDead -= CharacterKilled;        
+    }
+    #endregion
 
     private void Awake()
     {
@@ -29,62 +51,109 @@ public class GameManager : MonoBehaviour
         InitializeRound();
     }
 
-    private void InitializeRound()
+    private void Update()
     {
-        _team0InLive = new List<PlayerIdentity>();
-        _team1InLive = new List<PlayerIdentity>();
+        if (_waitingForRound)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                InitializeRound();
+                _waitingScreen.SetActive(false);
+                _waitingForRound = false;
+            }
+        }
+    }
 
-        _objectifFlag.SetActive(true);
+    private void DestroyAllEntity()
+    {
         GameObject[] walls = GameObject.FindGameObjectsWithTag("Wall");
         GameObject[] projectiles = GameObject.FindGameObjectsWithTag("Projectile");
 
         foreach (GameObject wall in walls) { Destroy(wall); }
-
         foreach (GameObject projectile in projectiles) { Destroy(projectile); }
+    }
 
+    private void InitializeRound()
+    {
+        DestroyAllEntity();
 
-        foreach (PlayerIdentity character in _allCharactersPlayers)
+        _team0InLive = new List<PlayerIdentity>();
+        _team1InLive = new List<PlayerIdentity>();
+
+        _objectifFlag.ResetStartPos();
+
+        if(_allCharactersPlayers.Count > 0)
         {
-            character.gameObject.SetActive(true);
-            character.SetCharacterPlayable(false);
-            character.gameObject.GetComponent<PlayerHealth>();
-            character._actionReader.StartRound();
-
-            if(character.GetTeamIndex() == 0)
+            for (int i = 0; i < _allCharactersPlayers.Count; i++)
             {
-                character.gameObject.transform.position = _team0SpawnPos.transform.position; 
-                character.transform.rotation = _team0SpawnPos.transform.rotation;
-                _team0InLive.Add(character);
-            }
-            else 
-            { 
-                character.gameObject.transform.position = _team1SpawnPos.transform.position;
-                character.transform.rotation = _team1SpawnPos.transform.rotation; 
-                _team1InLive.Add(character);
-            }
+                PlayerIdentity currPlayer = _allCharactersPlayers[i];
 
-            character.GetComponent<PlayerMovements>().StopAgentMovement();
-            character.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[character.GetTeamIndex()]);
-            if (character.GetPlayFlagStatus()) { character.SetPlayerCatchFlag(false); character.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[2]); }
-            character.GetComponent<PlayerHealth>().ResetHeal();
+                currPlayer.gameObject.SetActive(true);
+                currPlayer.SetCharacterPlayable(false);
+                currPlayer._actionReader.StartRound();
+
+                if (_allCharactersPlayers[i].GetTeamIndex() == 0)
+                {
+                    _team0InLive.Add(currPlayer);
+                    currPlayer.gameObject.transform.position = _team0StartPos[_team0InLive.Count - 1].position;
+                    currPlayer.transform.rotation = _team0StartPos[_team0InLive.Count - 1].rotation;
+                }
+                else
+                {
+                    _team1InLive.Add(currPlayer);
+                    currPlayer.gameObject.transform.position = _team1StartPos[_team1InLive.Count - 1].transform.position;
+                    currPlayer.transform.rotation = _team1StartPos[_team1InLive.Count - 1].transform.rotation;
+                }
+
+                currPlayer.GetComponent<PlayerMovements>().StopAgentMovement();
+
+                currPlayer.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[_allCharactersPlayers[i].GetTeamIndex()]);
+
+                if (currPlayer.GetPlayFlagStatus()) { currPlayer.SetPlayerCatchFlag(false); currPlayer.GetComponent<PlayerTeamColor>().ChangeCharacterColor(_teamColors[2]); }
+
+                currPlayer.GetComponent<PlayerHealth>().ResetHeal();
+            }
         }
 
+        InitializeNewCharacter();
+    }
+
+    public void InitializeNewCharacter()
+    {
         Vector3 spawnPoint = Vector3.zero;
 
-        if (teamIndex == 0) { spawnPoint = _team0SpawnPos.transform.position; }
-        else { spawnPoint = _team1SpawnPos.transform.position; }
+        Quaternion rotation = new Quaternion();
 
-        currCharacter = Instantiate(_playerPrefab, spawnPoint, Quaternion.identity);
-        currCharacterIdentity = currCharacter.GetComponent<PlayerIdentity>();
-        _allCharactersPlayers.Add(currCharacterIdentity);
-        _cameraController.AssignNewPlayerForCamera(currCharacter);
-        currCharacterIdentity.SetTeamIndex(teamIndex);
+        if (currRoundTeamId == 0)
+        {
+            spawnPoint = _team0StartPos[_team0InLive.Count].transform.position; rotation = Quaternion.identity; 
+        }
+        else if (currRoundTeamId == 1)
+        {
+            spawnPoint = _team1StartPos[_team1InLive.Count].transform.position; rotation = Quaternion.Euler(0, 180, 0);
+        }
+
+        _currCharacter = Instantiate(_playerPrefab, spawnPoint, rotation);
+        _currCharacterIdentity = _currCharacter.GetComponent<PlayerIdentity>();
+        _cameraController.AssignNewPlayerForCamera(_currCharacter);
+        _currCharacterIdentity.SetTeamIndex(currRoundTeamId);
+
+        _allCharactersPlayers.Add(_currCharacterIdentity);
+
+        if (currRoundTeamId == 0) { _team0InLive.Add(_currCharacterIdentity); }
+        else if (currRoundTeamId == 1) { _team1InLive.Add(_currCharacterIdentity); }
     }
 
     public void CharacterKilled(PlayerIdentity currPlayerIdentity)
     {
-        if(_team0InLive.Contains(currPlayerIdentity)) { _team0InLive.Remove(currPlayerIdentity); }
-        if(_team1InLive.Contains(currPlayerIdentity)) { _team0InLive.Remove(currPlayerIdentity); }
+        if(_team0InLive.Contains(currPlayerIdentity)) 
+        { 
+            _team0InLive.Remove(currPlayerIdentity); 
+        }
+        if(_team1InLive.Contains(currPlayerIdentity))
+        { 
+            _team1InLive.Remove(currPlayerIdentity);
+        }
 
         if(_team0InLive.Count == 0 || _team1InLive.Count == 0) { EndRound(); }
     }
@@ -94,10 +163,16 @@ public class GameManager : MonoBehaviour
         foreach (PlayerIdentity character in _allCharactersPlayers)
         {
             character._actionReader.EndRound();
+            character.gameObject.SetActive(false);
         }
-        currCharacterIdentity._actionReader.SaveActions(currCharacterIdentity._actionWriter.GetActions());
-        if(teamIndex == 0) { teamIndex = 1; }
-        else { teamIndex = 0; }
-        InitializeRound();
+        _currCharacterIdentity._actionReader.SaveActions(_currCharacterIdentity._actionWriter.GetActions());
+
+        if(currRoundTeamId == 0) { currRoundTeamId = 1; }
+        else { currRoundTeamId = 0; }
+
+        _teamIndexInfoText.text = $"Team {currRoundTeamId}";
+        _waitingScreen.SetActive(true);
+
+        _waitingForRound = true;
     }
 }

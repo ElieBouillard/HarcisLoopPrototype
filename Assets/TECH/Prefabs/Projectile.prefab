@@ -48,6 +48,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _speed: 15
   _spellRangeDestroy: 7
+  _damage: 100
 --- !u!54 &9100669858289702726
 Rigidbody:
   m_ObjectHideFlags: 0

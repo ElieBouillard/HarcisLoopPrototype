@@ -11,6 +11,7 @@ public class BaseWall : MonoBehaviour
         {
             if (currPlayerIdentity.GetPlayFlagStatus())
             {
+                if(GameManager.instance._waitingForRound) { return; }
                 GameManager.instance.EndRound();
             }
         }

@@ -41,6 +41,12 @@ public class PlayerIdentity : MonoBehaviour
         _getFlag = value;
     }
 
+    public void DropFlag()
+    {
+        SetPlayerCatchFlag(false);
+        GameManager.instance._objectifFlag.GetDroped(this.gameObject.transform.position);
+    }
+
     public bool GetPlayFlagStatus()
     {
         return _getFlag;
