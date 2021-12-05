@@ -1553,7 +1553,7 @@ MonoBehaviour:
   _projectilePrefab: {fileID: 3211617079162068245, guid: bcadfa88f2e7c0141a346b5b91f7cbc5, type: 3}
   _wallPrefab: {fileID: 6667537904724880107, guid: 789dece957e2e304fa0fc20374c192c8, type: 3}
   _playerUIOnFloor: {fileID: 8975971490988547645}
-  _defaultProjectileCouldown: 1
+  _defaultProjectileCouldown: 3
   _projectileCouldown: 0
   _wallCouldown: 0
 --- !u!114 &2952043707605424080

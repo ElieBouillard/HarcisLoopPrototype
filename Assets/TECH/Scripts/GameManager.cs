@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using System;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +20,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] private GameObject _waitingScreen = null;
     [SerializeField] private TMP_Text _teamIndexInfoText = null;
     [SerializeField] private TMP_Text _couldownText = null;
+    [SerializeField] private Image _couldownImg = null;
+    [SerializeField] private Image _cdSpellImg = null;
+    [SerializeField] private GameObject _spellObj = null;
+    [SerializeField] private TMP_Text _cdSpellText = null;
+    [SerializeField] private GameObject _cdWallImg = null;
     [Space(20)]
     [SerializeField] private Transform[] _team0StartPos = null;
     [Space(20)]
@@ -39,6 +45,8 @@ public class GameManager : MonoBehaviour
     [HideInInspector] public bool _waitingForRound = false;
 
     private float _startRoundCouldown = 0f;
+
+    public PlayerSpells _playerSpells = null;
 
     #region OnEnable / OnDisable
     private void OnEnable()
@@ -77,13 +85,31 @@ public class GameManager : MonoBehaviour
             }
         }
 
-        if(_startRoundCouldown == -1) { return; }
+        if (_playerSpells._projectileCouldown == -1)
+        {
+            _cdSpellText.text = "";
+            _cdSpellImg.fillAmount = 0;
+        }
+        else
+        {
+            _cdSpellImg.fillAmount = _playerSpells._projectileCouldown / _playerSpells._defaultProjectileCouldown;
+            _cdSpellText.text = ((float)Math.Ceiling(_playerSpells._projectileCouldown)).ToString();
+        }
+
+        if (_playerSpells._wallCouldown && _cdWallImg.activeSelf)
+        {
+            _cdWallImg.SetActive(false);
+        }
+
+        if (_startRoundCouldown == -1) { return; }
 
         if(_startRoundCouldown > 0)
         {
             _startRoundCouldown -= Time.deltaTime;
             double couldownSec = Math.Ceiling(_startRoundCouldown);
             _couldownText.text = couldownSec.ToString();
+
+            _couldownImg.fillAmount = _startRoundCouldown - (float)Math.Truncate(_startRoundCouldown);
         }
         else
         {
@@ -100,6 +126,8 @@ public class GameManager : MonoBehaviour
 
     private void InitializeRound()
     {
+        _spellObj.SetActive(true);
+
         DestroyAllEntity();
 
         _team0InLive = new List<PlayerIdentity>();
@@ -176,6 +204,8 @@ public class GameManager : MonoBehaviour
         _cameraController.AssignNewPlayerForCamera(_currCharacter);
         _currCharacterIdentity.SetTeamIndex(currRoundTeamId);
 
+        _playerSpells = _currCharacter.gameObject.GetComponent<PlayerSpells>();
+
         _allCharactersPlayers.Add(_currCharacterIdentity);
 
         if (currRoundTeamId == 0) { _team0InLive.Add(_currCharacterIdentity); }
@@ -223,5 +253,6 @@ public class GameManager : MonoBehaviour
         _waitingScreen.SetActive(true);
 
         _waitingForRound = true;
+        _spellObj.SetActive(false);
     }
 }

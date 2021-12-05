@@ -10,7 +10,7 @@ public class PlayerSpells : MonoBehaviour
     [SerializeField] private GameObject _projectilePrefab = null;
     [SerializeField] private GameObject _wallPrefab = null;
     [SerializeField] public GameObject _playerUIOnFloor = null;
-    [SerializeField] private float _defaultProjectileCouldown = 2f;
+    [SerializeField] public float _defaultProjectileCouldown = 2f;
  
     private PlayerIdentity _playerIdentity = null;
     private PlayerInputs _playerInputs = null;
