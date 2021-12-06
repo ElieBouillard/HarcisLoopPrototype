@@ -23,7 +23,7 @@ public class Wall : MonoBehaviour
     {
         if(_builded) { return; }
         _material.SetFloat("_AdvancedDissolveCutoutStandardClip", Mathf.SmoothDamp(_material.GetFloat("_AdvancedDissolveCutoutStandardClip"), 0f, ref currDissolveVelocity, _dissolveSpeed));
-        if (_material.GetFloat("_AdvancedDissolveCutoutStandardClip") < 0.05) { Build(); }
+        if (_material.GetFloat("_AdvancedDissolveCutoutStandardClip") < 0.1f) { Build(); }
     }
 
     private void Build()

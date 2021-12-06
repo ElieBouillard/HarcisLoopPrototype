@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Projectile : MonoBehaviour
 {
+    [SerializeField] private GameObject[] _fireBallTeams;
+
     [SerializeField] private float _speed = 2f;
     [SerializeField] private float _spellRangeDestroy = 2f;
     [SerializeField] private float _damage = 20f;
@@ -30,18 +32,20 @@ public class Projectile : MonoBehaviour
     public void SetTeamIndex(int value)
     {
         _teamIndex = value;
+        _fireBallTeams[value].SetActive(true);
     }
 
     public void SetPos(Vector3 newPos)
     {
         _startPos = newPos;
         this.transform.position = newPos;
-    }
+    } 
 
     private void SelfDestroy()
     {
         Destroy(this.gameObject);
     }
+
 
     private void OnTriggerEnter(Collider other)
     {
@@ -50,6 +54,8 @@ public class Projectile : MonoBehaviour
             if(playerIdentity.GetTeamIndex() == _teamIndex) { return; }
 
             other.gameObject.GetComponent<PlayerHealth>().TakeDamage(_damage);
+
+            Destroy(this.gameObject);
         }
 
         if (other.gameObject.GetComponent<Wall>())

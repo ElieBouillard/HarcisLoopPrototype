@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -46,7 +47,9 @@ public class GameManager : MonoBehaviour
 
     private float _startRoundCouldown = 0f;
 
-    public PlayerSpells _playerSpells = null;
+    private PlayerSpells _playerSpells = null;
+
+    private int roundCount = 0;
 
     #region OnEnable / OnDisable
     private void OnEnable()
@@ -168,6 +171,8 @@ public class GameManager : MonoBehaviour
         }
 
         InitializeNewCharacter();
+
+        roundCount++;
     }
 
     private void StartRound()
@@ -239,6 +244,12 @@ public class GameManager : MonoBehaviour
 
     public void EndRound()
     {
+        if (roundCount >= 6)
+        {
+            SceneManager.LoadScene("MainMenuScene");
+            return;
+        }
+
         foreach (PlayerIdentity character in _allCharactersPlayers)
         {
             character._actionReader.EndRound();
